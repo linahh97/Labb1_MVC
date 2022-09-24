@@ -1,0 +1,8 @@
+﻿@model BookViewModel
+
+@foreach (var book in Model.BooksInStock)
+{
+    <img src="@book.ImageUrl" alt="Book cover" />
+    <h3>@book.BookName</h3>
+    <h4>@book.Author</h4>
+}

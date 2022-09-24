@@ -1,0 +1,11 @@
+﻿@model Book
+
+    <div class="img-thumbnail">
+        <img src="@Model.ImageThumbnail" alt="@Model.BookName" />
+
+        <div class="figure-caption">
+            <h3>@Model.BookName</h3>
+            <h5>@Model.Author</h5>
+            <p>@Model.Description</p>
+        </div>
+    </div>
