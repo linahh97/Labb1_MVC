@@ -7,6 +7,6 @@ namespace Labb1_MVC.Models
 {
     public interface ICustomerBookRepository
     {
-        Task<CustomerBook> GetBorrowedBooksFromCustomer(int id);
+        IEnumerable<CustomerBook> GetBorrowedBooksFromCustomer(int id);
     }
 }

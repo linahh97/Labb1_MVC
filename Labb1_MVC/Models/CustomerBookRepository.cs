@@ -14,9 +14,9 @@ namespace Labb1_MVC.Models
             _appDbContext = appDbContext;
         }
 
-        public async Task<CustomerBook> GetBorrowedBooksFromCustomer(int id)
+        public IEnumerable<CustomerBook> GetBorrowedBooksFromCustomer(int id)
         {
-            return await _appDbContext.CustomerBooks.Include(b => b.Book).FirstOrDefaultAsync(c => c.CustomerBookId == id);
+            throw new NotImplementedException();
         }
     }
 }

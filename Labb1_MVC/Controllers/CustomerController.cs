@@ -11,10 +11,12 @@ namespace Labb1_MVC.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly AppDbContext _appDbContext;
 
-        public CustomerController(ICustomerRepository customerRepository)
+        public CustomerController(ICustomerRepository customerRepository, AppDbContext appDbContext)
         {
             _customerRepository = customerRepository;
+            _appDbContext = appDbContext;
         }
 
         public async Task<IActionResult> GetAll()
@@ -36,21 +38,47 @@ namespace Labb1_MVC.Controllers
             return View(customer);
         }
 
-        public async Task<IActionResult> AddNew(Customer customer)
+        [HttpPost]
+        public async Task<ActionResult<Customer>> AddNew(Customer customer)
         {
-            if (customer == null)
-            {
-                return BadRequest();
-            }
             var addCustomer = await _customerRepository.AddCustomer(customer);
-            return View(CreatedAtAction(nameof(GetSingle), new { id = addCustomer.CustomerId }, addCustomer));
+            CreatedAtAction(nameof(GetSingle), new { id = addCustomer.CustomerId }, addCustomer);
+            return View();
+        }
 
+        public ActionResult AddNewCustomer()
+        {
+            return View("AddNew");
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            var deleteCustomer = await _customerRepository.DeleteCustomer(id);
+            var deleteCustomer = await _customerRepository.GetSingleCustomer(id);
+            if (deleteCustomer == null)
+            {
+                return NotFound();
+            }
+            await _customerRepository.DeleteCustomer(id);
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Customer customer)
+        {
+            _appDbContext.Update(customer);
+            _appDbContext.SaveChanges();
+            return RedirectToAction(nameof(GetAll));
+        }
+
+        public async Task<IActionResult> Updates(int id)
+        {
+            var customer = await _customerRepository.GetSingleCustomer(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            return View(customer);
         }
     }
 }

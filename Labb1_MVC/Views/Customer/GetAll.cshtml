@@ -1,5 +1,80 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model CustomerViewModel
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1>All customers</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <h4>Customer ID</h4>
+                    </th>
+                    <th>
+                        <h4>First Name</h4>
+                    </th>
+                    <th>
+                        <h4>Last Name</h4>
+                    </th>
+                    <th>
+                        <h4>Email</h4>
+                    </th>
+                    <th>
+                        <a asp-controller="Customer"
+                           asp-action="AddNewCustomer"
+                           class="btn btn-sm btn-success">
+                            <i class="fa-solid fa-plus"></i> Add Customer
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.AllCustomers)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+
+                        <td>
+                            <form asp-controller="Customer" asp-action="Delete" asp-route-id="@item.CustomerId">
+                                <div class="btn-group btn-group-sm">
+                                    <p class="button">
+                                        <a class="btn btn-warning"
+                                           asp-controller="Customer"
+                                           asp-action="Updates"
+                                           asp-route-id="@item.CustomerId">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                    </p>
+                                    <p class="button">
+                                        <button type="submit" class="btn btn-danger"
+                                                onclick="return confirm('Are you sure about deleting this record?')">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </p>
+                                    <p class="button">
+                                        <a class="btn btn-primary"
+                                           asp-controller="Customer"
+                                           asp-action="GetSingle"
+                                           asp-route-id="@item.CustomerId">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </a>
+                                    </p>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

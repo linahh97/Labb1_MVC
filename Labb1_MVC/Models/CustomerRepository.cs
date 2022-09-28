@@ -25,7 +25,7 @@ namespace Labb1_MVC.Models
 
         public async Task<Customer> AddCustomer(Customer customer)
         {
-            var result = await _appDbContext.AddAsync(customer);
+            var result = await _appDbContext.Customers.AddAsync(customer);
             await _appDbContext.SaveChangesAsync();
             return result.Entity;
         }
@@ -44,18 +44,9 @@ namespace Labb1_MVC.Models
 
         public async Task<Customer> UpdateCustomer(Customer customer)
         {
-            var result = await _appDbContext.Customers.FirstOrDefaultAsync(c => c.CustomerId == customer.CustomerId);
-            if (result != null)
-            {
-                result.FirstName = customer.FirstName;
-                result.LastName = customer.LastName;
-                result.PersonalNumber = customer.PersonalNumber;
-                result.Email = customer.Email;
-
-                await _appDbContext.SaveChangesAsync();
-                return result;
-            }
-            return null;
+            _appDbContext.Customers.Update(customer);
+            await _appDbContext.SaveChangesAsync();
+            return customer;
         }
     }
 }

@@ -5,4 +5,10 @@
     <img src="@book.ImageUrl" alt="Book cover" />
     <h3>@book.BookName</h3>
     <h4>@book.Author</h4>
+    <p class="button">
+        <a class="btn btn-primary"
+           asp-controller="Book"
+           asp-action="Details"
+           asp-route-id="@book.BookId">View Book</a>
+    </p>
 }

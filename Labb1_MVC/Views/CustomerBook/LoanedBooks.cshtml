@@ -1,0 +1,50 @@
+﻿@model CustomerBookViewModel
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h2>Loan History</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <h4>Cover</h4>
+                    </th>
+                    <th>
+                        <h4>Title</h4>
+                    </th>
+                    <th>
+                        <h4>Author</h4>
+                    </th>
+                    <th>
+                        <h4>Loan Date</h4>
+                    </th>
+                    <th>
+                        <h4>Return Date</h4>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.GetCustomerBooks)
+                {
+                    <tr>
+                        <td>
+                            <img src="@item.Book.ImageThumbnail" alt="Book cover" />
+                        </td>
+                        <td>
+                            @item.Book.BookName
+                        </td>
+                        <td>
+                            @item.Book.Author
+                        </td>
+                        <td>
+                            @item.Borrowed
+                        </td>
+                        <td>
+                            @item.Returned
+                        </td>                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
